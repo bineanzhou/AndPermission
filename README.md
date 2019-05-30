@@ -1,4 +1,4 @@
-﻿# AndPermission
+﻿# NSkyPermission
 1. Request for runtime permissions.  
 2. Share private files.  
 3. Request to install unknown source apk.  
@@ -12,7 +12,7 @@
   `android.permission.WRITE_SETTINGS`
 
 ```java
-AndPermission.with(this)
+NSkyPermission.with(this)
   .runtime()
   .permission(Permission.Group.STORAGE)
   .onGranted(permissions -> {
@@ -24,20 +24,20 @@ AndPermission.with(this)
   .start();
 ```
 
-For documentation and additional information see [the website](https://www.yanzhenjie.com/AndPermission).
+For documentation and additional information see [the website](https://www.yanzhenjie.com/NSkyPermission).
 
 ## Download
 If you are using the android support library:
 ```groovy
-implementation 'com.yanzhenjie.permission:support:2.0.1'
+implementation 'com.nsky.permission:support:2.0.1'
 ```
 
 If you are using the android x library:
 ```groovy
-implementation 'com.yanzhenjie.permission:x:2.0.1'
+implementation 'com.nsky.permission:x:2.0.1'
 ```
 
-AndPermission requires at minimum Android 4.0(Api level 14) .
+NSkyPermission requires at minimum Android 4.0(Api level 14) .
 
 ## Contributing
 Before submitting pull requests, contributors must abide by the [agreement](CONTRIBUTING.md) .

@@ -16,7 +16,7 @@
 -->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yanzhenjie.permission">
+    package="com.nsky.permission">
 
     <application>
         <activity

@@ -15,7 +15,7 @@
     limitations under the License.
 -->
 <resources>
-    <string name="app_name">AndPermission</string>
+    <string name="app_name">NSkyPermission</string>
 
     <string name="setting">Setting</string>
     <string name="resume">Resume</string>
