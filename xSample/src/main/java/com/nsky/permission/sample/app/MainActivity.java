@@ -320,26 +320,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Request permissions.
      */
     private void requestPermission(String... permissions) {
-        NSkyPermission.with(this)
-            .runtime()
-            .permission(permissions)
-            .rationale(new RuntimeRationale())
-            .onGranted(new Action<List<String>>() {
-                @Override
-                public void onAction(List<String> permissions) {
-                    toast(R.string.successfully);
-                }
-            })
-            .onDenied(new Action<List<String>>() {
-                @Override
-                public void onAction(@NonNull List<String> permissions) {
-                    toast(R.string.failure);
-                    if (NSkyPermission.hasAlwaysDeniedPermission(MainActivity.this, permissions)) {
-                        showSettingDialog(MainActivity.this, permissions);
-                    }
-                }
-            })
-            .start();
+        if(!NSkyPermission.hasPermissions(this, permissions))
+        {
+            NSkyPermission.with(this)
+                    .runtime()
+                    .permission(permissions)
+                    .rationale(new RuntimeRationale())
+                    .onGranted(new Action<List<String>>() {
+                        @Override
+                        public void onAction(List<String> permissions) {
+                            toast(R.string.successfully);
+                        }
+                    })
+                    .onDenied(new Action<List<String>>() {
+                        @Override
+                        public void onAction(@NonNull List<String> permissions) {
+                            toast(R.string.failure);
+                            if (NSkyPermission.hasAlwaysDeniedPermission(MainActivity.this, permissions)) {
+                                showSettingDialog(MainActivity.this, permissions);
+                            }
+                        }
+                    })
+                    .start();
+        }else
+        {
+            toast("to do");
+        }
+
     }
 
     /**
@@ -532,6 +539,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void toast(@StringRes int message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+    protected void toast(CharSequence message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

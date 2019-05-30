@@ -22,7 +22,7 @@ android {
                     outputFileName = fileName
                 }
 
-                variant.getAssembleProvider().configure(){
+                variant.getAssembleProvider().configure() {
                     it.doLast {
                         variant.outputs.each { output ->
                             def outputFile = output.outputFile
