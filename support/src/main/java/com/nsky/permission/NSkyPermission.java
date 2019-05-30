@@ -16,15 +16,21 @@
 package com.nsky.permission;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 
 import com.nsky.permission.checker.DoubleChecker;
 import com.nsky.permission.checker.PermissionChecker;
 import com.nsky.permission.option.Option;
+import com.nsky.permission.runtime.Permission;
+import com.nsky.permission.runtime.PermissionRequest;
 import com.nsky.permission.source.ActivitySource;
 import com.nsky.permission.source.ContextSource;
 import com.nsky.permission.source.FragmentSource;
@@ -40,7 +46,6 @@ public class NSkyPermission {
      * With context.
      *
      * @param context {@link Context}.
-     *
      * @return {@link Option}.
      */
     public static Option with(Context context) {
@@ -51,7 +56,6 @@ public class NSkyPermission {
      * With {@link Fragment}.
      *
      * @param fragment {@link Fragment}.
-     *
      * @return {@link Option}.
      */
     public static Option with(Fragment fragment) {
@@ -62,7 +66,6 @@ public class NSkyPermission {
      * With {@link android.app.Fragment}.
      *
      * @param fragment {@link android.app.Fragment}.
-     *
      * @return {@link Option}.
      */
     public static Option with(android.app.Fragment fragment) {
@@ -73,19 +76,23 @@ public class NSkyPermission {
      * With activity.
      *
      * @param activity {@link Activity}.
-     *
      * @return {@link Option}.
      */
     public static Option with(Activity activity) {
         return new Boot(new ActivitySource(activity));
     }
 
+    public static PermissionRequest requestPermissions(Activity activity, @NonNull String... permissions) {
+        return NSkyPermission.with(activity)
+                .runtime()
+                .permission(permissions);
+    }
+
     /**
      * Some privileges permanently disabled, may need to set up in the execute.
      *
-     * @param context {@link Context}.
+     * @param context           {@link Context}.
      * @param deniedPermissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasAlwaysDeniedPermission(Context context, List<String> deniedPermissions) {
@@ -95,9 +102,8 @@ public class NSkyPermission {
     /**
      * Some privileges permanently disabled, may need to set up in the execute.
      *
-     * @param fragment {@link Fragment}.
+     * @param fragment          {@link Fragment}.
      * @param deniedPermissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasAlwaysDeniedPermission(Fragment fragment, List<String> deniedPermissions) {
@@ -107,9 +113,8 @@ public class NSkyPermission {
     /**
      * Some privileges permanently disabled, may need to set up in the execute.
      *
-     * @param fragment {@link android.app.Fragment}.
+     * @param fragment          {@link android.app.Fragment}.
      * @param deniedPermissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasAlwaysDeniedPermission(android.app.Fragment fragment, List<String> deniedPermissions) {
@@ -119,9 +124,8 @@ public class NSkyPermission {
     /**
      * Some privileges permanently disabled, may need to set up in the execute.
      *
-     * @param activity {@link Activity}.
+     * @param activity          {@link Activity}.
      * @param deniedPermissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasAlwaysDeniedPermission(Activity activity, List<String> deniedPermissions) {
@@ -143,9 +147,8 @@ public class NSkyPermission {
     /**
      * Some privileges permanently disabled, may need to set up in the execute.
      *
-     * @param context {@link Context}.
+     * @param context           {@link Context}.
      * @param deniedPermissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasAlwaysDeniedPermission(Context context, String... deniedPermissions) {
@@ -155,9 +158,8 @@ public class NSkyPermission {
     /**
      * Some privileges permanently disabled, may need to set up in the execute.
      *
-     * @param fragment {@link Fragment}.
+     * @param fragment          {@link Fragment}.
      * @param deniedPermissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasAlwaysDeniedPermission(Fragment fragment, String... deniedPermissions) {
@@ -167,9 +169,8 @@ public class NSkyPermission {
     /**
      * Some privileges permanently disabled, may need to set up in the execute.
      *
-     * @param fragment {@link android.app.Fragment}.
+     * @param fragment          {@link android.app.Fragment}.
      * @param deniedPermissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasAlwaysDeniedPermission(android.app.Fragment fragment, String... deniedPermissions) {
@@ -179,9 +180,8 @@ public class NSkyPermission {
     /**
      * Some privileges permanently disabled, may need to set up in the execute.
      *
-     * @param activity {@link Activity}.
+     * @param activity          {@link Activity}.
      * @param deniedPermissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasAlwaysDeniedPermission(Activity activity, String... deniedPermissions) {
@@ -208,9 +208,8 @@ public class NSkyPermission {
     /**
      * Judgment already has the target permission.
      *
-     * @param context {@link Context}.
+     * @param context     {@link Context}.
      * @param permissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasPermissions(Context context, String... permissions) {
@@ -220,9 +219,8 @@ public class NSkyPermission {
     /**
      * Judgment already has the target permission.
      *
-     * @param fragment {@link Fragment}.
+     * @param fragment    {@link Fragment}.
      * @param permissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasPermissions(Fragment fragment, String... permissions) {
@@ -232,9 +230,8 @@ public class NSkyPermission {
     /**
      * Judgment already has the target permission.
      *
-     * @param fragment {@link android.app.Fragment}.
+     * @param fragment    {@link android.app.Fragment}.
      * @param permissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasPermissions(android.app.Fragment fragment, String... permissions) {
@@ -244,9 +241,8 @@ public class NSkyPermission {
     /**
      * Judgment already has the target permission.
      *
-     * @param activity {@link Activity}.
+     * @param activity    {@link Activity}.
      * @param permissions one or more permissions.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasPermissions(Activity activity, String... permissions) {
@@ -256,9 +252,8 @@ public class NSkyPermission {
     /**
      * Judgment already has the target permission.
      *
-     * @param context {@link Context}.
+     * @param context     {@link Context}.
      * @param permissions one or more permission groups.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasPermissions(Context context, String[]... permissions) {
@@ -272,9 +267,8 @@ public class NSkyPermission {
     /**
      * Judgment already has the target permission.
      *
-     * @param fragment {@link Fragment}.
+     * @param fragment    {@link Fragment}.
      * @param permissions one or more permission groups.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasPermissions(Fragment fragment, String[]... permissions) {
@@ -284,9 +278,8 @@ public class NSkyPermission {
     /**
      * Judgment already has the target permission.
      *
-     * @param fragment {@link android.app.Fragment}.
+     * @param fragment    {@link android.app.Fragment}.
      * @param permissions one or more permission groups.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasPermissions(android.app.Fragment fragment, String[]... permissions) {
@@ -296,9 +289,8 @@ public class NSkyPermission {
     /**
      * Judgment already has the target permission.
      *
-     * @param activity {@link Activity}.
+     * @param activity    {@link Activity}.
      * @param permissions one or more permission groups.
-     *
      * @return true, other wise is false.
      */
     public static boolean hasPermissions(Activity activity, String[]... permissions) {
@@ -313,8 +305,7 @@ public class NSkyPermission {
      * Get compatible Android 7.0 and lower versions of Uri.
      *
      * @param context {@link Context}.
-     * @param file apk file.
-     *
+     * @param file    apk file.
      * @return uri.
      */
     public static Uri getFileUri(Context context, File file) {
@@ -328,8 +319,7 @@ public class NSkyPermission {
      * Get compatible Android 7.0 and lower versions of Uri.
      *
      * @param fragment {@link Fragment}.
-     * @param file apk file.
-     *
+     * @param file     apk file.
      * @return uri.
      */
     public static Uri getFileUri(Fragment fragment, File file) {
@@ -340,8 +330,7 @@ public class NSkyPermission {
      * Get compatible Android 7.0 and lower versions of Uri.
      *
      * @param fragment {@link android.app.Fragment}.
-     * @param file apk file.
-     *
+     * @param file     apk file.
      * @return uri.
      */
     public static Uri getFileUri(android.app.Fragment fragment, File file) {
@@ -352,8 +341,7 @@ public class NSkyPermission {
      * Get compatible Android 7.0 and lower versions of Uri.
      *
      * @param activity {@link Activity}.
-     * @param file apk file.
-     *
+     * @param file     apk file.
      * @return uri.
      */
     public static Uri getFileUri(Activity activity, File file) {
@@ -365,11 +353,43 @@ public class NSkyPermission {
 
     private static Source getContextSource(Context context) {
         if (context instanceof Activity) {
-            return new ActivitySource((Activity)context);
+            return new ActivitySource((Activity) context);
         } else if (context instanceof ContextWrapper) {
-            return getContextSource(((ContextWrapper)context).getBaseContext());
+            return getContextSource(((ContextWrapper) context).getBaseContext());
         }
         return new ContextSource(context);
+    }
+
+    /**
+     * Display setting dialog.
+     */
+    public static void showSettingDialog(final Activity activity, final List<String> permissions, final int reqCode) {
+        List<String> permissionNames = Permission.transformText(activity, permissions);
+        String message = activity.getString(R.string.message_permission_always_failed,
+                TextUtils.join("\n", permissionNames));
+
+        new AlertDialog.Builder(activity).setCancelable(false)
+                .setTitle(R.string.permission_title_dialog)
+                .setMessage(message)
+                .setPositiveButton(R.string.permission_setting, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startSetPermission(activity, reqCode);
+                    }
+                })
+                .setNegativeButton(R.string.permission_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * Set permissions.
+     */
+    public static void startSetPermission(final Activity activity, int reqCode) {
+        NSkyPermission.with(activity).runtime().setting().start(reqCode);
     }
 
     private NSkyPermission() {

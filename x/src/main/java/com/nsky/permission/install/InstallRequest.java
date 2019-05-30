@@ -40,12 +40,12 @@ public interface InstallRequest {
     /**
      * Action to be taken when all permissions are granted.
      */
-    InstallRequest onGranted(Action<File> granted);
+    InstallRequest onPermissionsGranted(Action<File> granted);
 
     /**
      * Action to be taken when all permissions are denied.
      */
-    InstallRequest onDenied(Action<File> denied);
+    InstallRequest onPermissionsDenied(Action<File> denied);
 
     /**
      * Start install.

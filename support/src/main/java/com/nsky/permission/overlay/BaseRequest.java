@@ -20,7 +20,7 @@ import android.content.Context;
 import android.os.Build;
 import android.view.WindowManager;
 
-import com.nsky.permission.Action;
+import com.nsky.permission.OnPermissionsListener;
 import com.nsky.permission.R;
 import com.nsky.permission.Rationale;
 import com.nsky.permission.RequestExecutor;
@@ -39,8 +39,7 @@ abstract class BaseRequest implements OverlayRequest {
             executor.execute();
         }
     };
-    private Action<Void> mGranted;
-    private Action<Void> mDenied;
+    private OnPermissionsListener<Void> mPermission;
 
     BaseRequest(Source source) {
         this.mSource = source;
@@ -53,16 +52,11 @@ abstract class BaseRequest implements OverlayRequest {
     }
 
     @Override
-    public final OverlayRequest onGranted(Action<Void> granted) {
-        this.mGranted = granted;
+    public final OverlayRequest setOnPermissionsListener(OnPermissionsListener<Void> granted) {
+        this.mPermission = granted;
         return this;
     }
 
-    @Override
-    public final OverlayRequest onDenied(Action<Void> denied) {
-        this.mDenied = denied;
-        return this;
-    }
 
     /**
      * Why permissions are required.
@@ -75,8 +69,8 @@ abstract class BaseRequest implements OverlayRequest {
      * Callback acceptance status.
      */
     final void callbackSucceed() {
-        if (mGranted != null) {
-            mGranted.onAction(null);
+        if (mPermission != null) {
+            mPermission.onPermissionsGranted(null);
         }
     }
 
@@ -84,8 +78,8 @@ abstract class BaseRequest implements OverlayRequest {
      * Callback rejected state.
      */
     final void callbackFailed() {
-        if (mDenied != null) {
-            mDenied.onAction(null);
+        if (mPermission != null) {
+            mPermission.onPermissionsDenied(null);
         }
     }
 

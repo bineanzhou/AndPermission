@@ -61,13 +61,13 @@ abstract class BaseRequest implements InstallRequest {
     }
 
     @Override
-    public final InstallRequest onGranted(Action<File> granted) {
+    public final InstallRequest onPermissionsGranted(Action<File> granted) {
         this.mGranted = granted;
         return this;
     }
 
     @Override
-    public final InstallRequest onDenied(Action<File> denied) {
+    public final InstallRequest onPermissionsDenied(Action<File> denied) {
         this.mDenied = denied;
         return this;
     }

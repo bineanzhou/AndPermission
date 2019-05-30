@@ -25,4 +25,18 @@
     <string name="permission_name_sensors">身体传感器</string>
     <string name="permission_name_sms">短信</string>
     <string name="permission_name_storage">存储空间</string>
+
+    <string name="permission_title_dialog">提示信息</string>
+    <string name="permission_message_install_failed">您的设备不允许我们安装应用。</string>
+    <string name="permission_message_overlay_failed">您的设备不允许我们使用其他应用程序。</string>
+    <string name="permission_message_write_setting_failed">您的设备不允许我们修改系统设置。</string>
+    <string name="permission_message_error_storage">请检查存储卡。</string>
+    <string name="permission_message_notification_listener_rationale">您的设备不允许我们访问通知。</string>
+    <string name="permission_message_notification_rationale">您的设备不允许我们弹出通知。</string>
+    <string name="permission_message_permission_rationale">申请以下权限以继续运行该应用:\n\n%1$s</string>
+    <string name="permission_setting">设置</string>
+    <string name="permission_ok">确认</string>
+    <string name="permission_cancel">取消</string>
+    <string name="message_permission_always_failed">请去设置页面打开相关权限:\n\n%1$s</string>
+
 </resources>

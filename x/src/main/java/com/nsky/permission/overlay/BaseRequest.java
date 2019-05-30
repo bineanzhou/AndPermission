@@ -53,13 +53,13 @@ abstract class BaseRequest implements OverlayRequest {
     }
 
     @Override
-    public final OverlayRequest onGranted(Action<Void> granted) {
+    public final OverlayRequest onPermissionsGranted(Action<Void> granted) {
         this.mGranted = granted;
         return this;
     }
 
     @Override
-    public final OverlayRequest onDenied(Action<Void> denied) {
+    public final OverlayRequest onPermissionsDenied(Action<Void> denied) {
         this.mDenied = denied;
         return this;
     }

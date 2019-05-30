@@ -72,9 +72,9 @@ public class SettingPage {
     }
 
     private static Intent huaweiApi(Context context) {
-        Intent intent = new Intent();
-        intent.setClassName("com.huawei.systemmanager", "com.huawei.permissionmanager.ui.MainActivity");
-        if (hasActivity(context, intent)) return intent;
+//        Intent intent = new Intent();
+//        intent.setClassName("com.huawei.systemmanager", "com.huawei.permissionmanager.ui.MainActivity");
+//        if (hasActivity(context, intent)) return intent;
 
         return defaultApi(context);
     }

@@ -49,13 +49,13 @@ abstract class BaseRequest implements WriteRequest {
     }
 
     @Override
-    public final WriteRequest onGranted(Action<Void> granted) {
+    public final WriteRequest onPermissionsGranted(Action<Void> granted) {
         this.mGranted = granted;
         return this;
     }
 
     @Override
-    public final WriteRequest onDenied(Action<Void> denied) {
+    public final WriteRequest onPermissionsDenied(Action<Void> denied) {
         this.mDenied = denied;
         return this;
     }

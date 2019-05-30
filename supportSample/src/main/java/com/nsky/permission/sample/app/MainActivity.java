@@ -15,35 +15,30 @@
  */
 package com.nsky.permission.sample.app;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.nsky.permission.Action;
 import com.nsky.permission.NSkyPermission;
+import com.nsky.permission.OnPermissionsListener;
+import com.nsky.permission.rational.InstallRationale;
+import com.nsky.permission.rational.NotifyListenerRationale;
+import com.nsky.permission.rational.NotifyRationale;
+import com.nsky.permission.rational.OverlayRationale;
+import com.nsky.permission.rational.RuntimeRationale;
+import com.nsky.permission.rational.WriteSettingRationale;
 import com.nsky.permission.runtime.Permission;
 import com.nsky.permission.sample.App;
-import com.nsky.permission.sample.InstallRationale;
-import com.nsky.permission.sample.NotifyListenerRationale;
-import com.nsky.permission.sample.NotifyRationale;
-import com.nsky.permission.sample.OverlayRationale;
 import com.nsky.permission.sample.R;
-import com.nsky.permission.sample.RuntimeRationale;
-import com.nsky.permission.sample.WriteSettingRationale;
 
 import java.io.File;
 import java.util.List;
@@ -289,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.btn_setting: {
-                setPermission();
+                NSkyPermission.startSetPermission(this, REQUEST_CODE_SETTING);
                 break;
             }
             case R.id.btn_notification: {
@@ -319,60 +314,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Request permissions.
      */
     private void requestPermission(String... permissions) {
-        NSkyPermission.with(this)
-            .runtime()
-            .permission(permissions)
-            .rationale(new RuntimeRationale())
-            .onGranted(new Action<List<String>>() {
-                @Override
-                public void onAction(List<String> permissions) {
-                    toast(R.string.successfully);
-                }
-            })
-            .onDenied(new Action<List<String>>() {
-                @Override
-                public void onAction(@NonNull List<String> permissions) {
-                    toast(R.string.failure);
-                    if (NSkyPermission.hasAlwaysDeniedPermission(MainActivity.this, permissions)) {
-                        showSettingDialog(MainActivity.this, permissions);
+        if (NSkyPermission.hasPermissions(this, permissions)) {
+            toast("to do");
+            return;
+        }
+        NSkyPermission.requestPermissions(this, permissions)
+//            .rationale(new RuntimeRationale())
+                .setOnPermissionsListener(new OnPermissionsListener<List<String>>() {
+                    @Override
+                    public void onPermissionsGranted(List<String> permissions) {
+                        toast(R.string.successfully);
                     }
 
-                }
-            })
-            .start();
+                    @Override
+                    public void onPermissionsDenied(List<String> permissions) {
+                        toast(R.string.failure);
+                        if (NSkyPermission.hasAlwaysDeniedPermission(MainActivity.this, permissions)) {
+                            NSkyPermission.showSettingDialog(MainActivity.this, permissions, REQUEST_CODE_SETTING);
+                        }
+                    }
+                })
+                .start();
     }
 
-    /**
-     * Display setting dialog.
-     */
-    public void showSettingDialog(Context context, final List<String> permissions) {
-        List<String> permissionNames = Permission.transformText(context, permissions);
-        String message = context.getString(R.string.message_permission_always_failed,
-            TextUtils.join("\n", permissionNames));
-
-        new AlertDialog.Builder(context).setCancelable(false)
-            .setTitle(R.string.title_dialog)
-            .setMessage(message)
-            .setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    setPermission();
-                }
-            })
-            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            })
-            .show();
-    }
-
-    /**
-     * Set permissions.
-     */
-    private void setPermission() {
-        NSkyPermission.with(this).runtime().setting().start(REQUEST_CODE_SETTING);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -389,22 +353,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void requestNotification() {
         NSkyPermission.with(this)
-            .notification()
-            .permission()
-            .rationale(new NotifyRationale())
-            .onGranted(new Action<Void>() {
-                @Override
-                public void onAction(Void data) {
-                    toast(R.string.successfully);
-                }
-            })
-            .onDenied(new Action<Void>() {
-                @Override
-                public void onAction(Void data) {
-                    toast(R.string.failure);
-                }
-            })
-            .start();
+                .notification()
+                .permission()
+                .rationale(new NotifyRationale())
+                .setOnPermissionsListener(new OnPermissionsListener<Void>() {
+
+                    @Override
+                    public void onPermissionsGranted(Void data) {
+                        toast(R.string.successfully);
+                    }
+
+                    @Override
+                    public void onPermissionsDenied(Void data) {
+                        toast(R.string.failure);
+                    }
+                })
+                .start();
     }
 
     /**
@@ -412,22 +376,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void requestNotificationListener() {
         NSkyPermission.with(this)
-            .notification()
-            .listener()
-            .rationale(new NotifyListenerRationale())
-            .onGranted(new Action<Void>() {
-                @Override
-                public void onAction(Void data) {
-                    toast(R.string.successfully);
-                }
-            })
-            .onDenied(new Action<Void>() {
-                @Override
-                public void onAction(Void data) {
-                    toast(R.string.failure);
-                }
-            })
-            .start();
+                .notification()
+                .listener()
+                .rationale(new NotifyListenerRationale())
+                .setOnPermissionsListener(new OnPermissionsListener<Void>() {
+
+                    @Override
+                    public void onPermissionsGranted(Void data) {
+                        toast(R.string.successfully);
+                    }
+
+                    @Override
+                    public void onPermissionsDenied(Void data) {
+                        toast(R.string.failure);
+                    }
+                })
+                .start();
     }
 
     /**
@@ -435,27 +399,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void requestPermissionForInstallPackage() {
         NSkyPermission.with(this)
-            .runtime()
-            .permission(Permission.Group.STORAGE)
-            .rationale(new RuntimeRationale())
-            .onGranted(new Action<List<String>>() {
-                @Override
-                public void onAction(List<String> data) {
-                    new WriteApkTask(MainActivity.this, new Runnable() {
-                        @Override
-                        public void run() {
-                            installPackage();
-                        }
-                    }).execute();
-                }
-            })
-            .onDenied(new Action<List<String>>() {
-                @Override
-                public void onAction(List<String> data) {
-                    toast(R.string.message_install_failed);
-                }
-            })
-            .start();
+                .runtime()
+                .permission(Permission.Group.STORAGE)
+                .rationale(new RuntimeRationale())
+                .setOnPermissionsListener(new OnPermissionsListener<List<String>>() {
+
+                    @Override
+                    public void onPermissionsGranted(List<String> data) {
+                        new WriteApkTask(MainActivity.this, new Runnable() {
+                            @Override
+                            public void run() {
+                                installPackage();
+                            }
+                        }).execute();
+                    }
+
+                    @Override
+                    public void onPermissionsDenied(List<String> data) {
+                        toast(R.string.permission_message_install_failed);
+
+                    }
+                })
+                .start();
     }
 
     /**
@@ -463,50 +428,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void installPackage() {
         NSkyPermission.with(this)
-            .install()
-            .file(new File(Environment.getExternalStorageDirectory(), "android.apk"))
-            .rationale(new InstallRationale())
-            .onGranted(new Action<File>() {
-                @Override
-                public void onAction(File data) {
-                    // Installing.
-                    toast(R.string.successfully);
-                }
-            })
-            .onDenied(new Action<File>() {
-                @Override
-                public void onAction(File data) {
-                    // The user refused to install.
-                    toast(R.string.failure);
-                }
-            })
-            .start();
+                .install()
+                .file(new File(Environment.getExternalStorageDirectory(), "android.apk"))
+                .rationale(new InstallRationale())
+                .setOnPermissionsListener(new OnPermissionsListener<File>() {
+
+                    @Override
+                    public void onPermissionsGranted(File data) {
+                        // Installing.
+                        toast(R.string.successfully);
+                    }
+
+                    @Override
+                    public void onPermissionsDenied(File data) {
+                        // The user refused to install.
+                        toast(R.string.failure);
+                    }
+                })
+                .start();
     }
 
     private void requestPermissionForAlertWindow() {
-        NSkyPermission.with(this).overlay().rationale(new OverlayRationale()).onGranted(new Action<Void>() {
+        NSkyPermission.with(this).overlay().rationale(new OverlayRationale()).setOnPermissionsListener(new OnPermissionsListener<Void>() {
+
             @Override
-            public void onAction(Void data) {
+            public void onPermissionsGranted(Void data) {
                 toast(R.string.successfully);
                 showAlertWindow();
             }
-        }).onDenied(new Action<Void>() {
+
             @Override
-            public void onAction(Void data) {
+            public void onPermissionsDenied(Void data) {
                 toast(R.string.failure);
             }
         }).start();
     }
 
     private void requestWriteSystemSetting() {
-        NSkyPermission.with(this).setting().write().rationale(new WriteSettingRationale()).onGranted(new Action<Void>() {
+        NSkyPermission.with(this).setting().write().rationale(new WriteSettingRationale()).setOnPermissionsListener(new OnPermissionsListener<Void>() {
+
             @Override
-            public void onAction(Void data) {
+            public void onPermissionsGranted(Void data) {
                 toast(R.string.successfully);
             }
-        }).onDenied(new Action<Void>() {
+
             @Override
-            public void onAction(Void data) {
+            public void onPermissionsDenied(Void data) {
                 toast(R.string.failure);
             }
         }).start();
@@ -535,6 +502,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void toast(@StringRes int message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void toast(CharSequence message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

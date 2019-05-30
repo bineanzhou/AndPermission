@@ -18,12 +18,17 @@ package com.nsky.permission;
 /**
  * Created by YanZhenjie on 2018/1/1.
  */
-public interface Action<T> {
+public interface OnPermissionsListener<T> {
 
     /**
      * An action.
      *
      * @param data the data.
      */
-    void onAction(T data);
+
+    void onPermissionsGranted(T data);
+
+    void onPermissionsDenied(T data);
+
+
 }

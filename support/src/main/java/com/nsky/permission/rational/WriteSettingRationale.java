@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.nsky.permission.sample;
+package com.nsky.permission.rational;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.nsky.permission.R;
 import com.nsky.permission.Rationale;
 import com.nsky.permission.RequestExecutor;
 
@@ -30,15 +31,15 @@ public class WriteSettingRationale implements Rationale<Void> {
     @Override
     public void showRationale(Context context, Void data, final RequestExecutor executor) {
         new AlertDialog.Builder(context).setCancelable(false)
-            .setTitle(R.string.title_dialog)
-            .setMessage(R.string.message_write_setting_failed)
-            .setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
+            .setTitle(R.string.permission_title_dialog)
+            .setMessage(R.string.permission_message_write_setting_failed)
+            .setPositiveButton(R.string.permission_setting, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     executor.execute();
                 }
             })
-            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            .setNegativeButton(R.string.permission_cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     executor.cancel();

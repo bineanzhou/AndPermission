@@ -17,7 +17,7 @@ package com.nsky.permission.setting.write;
 
 import android.content.Context;
 
-import com.nsky.permission.Action;
+import com.nsky.permission.OnPermissionsListener;
 import com.nsky.permission.Rationale;
 import com.nsky.permission.RequestExecutor;
 import com.nsky.permission.source.Source;
@@ -35,8 +35,7 @@ abstract class BaseRequest implements WriteRequest {
             executor.execute();
         }
     };
-    private Action<Void> mGranted;
-    private Action<Void> mDenied;
+    private OnPermissionsListener<Void> mPermission;
 
     BaseRequest(Source source) {
         this.mSource = source;
@@ -49,16 +48,11 @@ abstract class BaseRequest implements WriteRequest {
     }
 
     @Override
-    public final WriteRequest onGranted(Action<Void> granted) {
-        this.mGranted = granted;
+    public final WriteRequest setOnPermissionsListener(OnPermissionsListener<Void> granted) {
+        this.mPermission = granted;
         return this;
     }
 
-    @Override
-    public final WriteRequest onDenied(Action<Void> denied) {
-        this.mDenied = denied;
-        return this;
-    }
 
     /**
      * Why permissions are required.
@@ -71,8 +65,8 @@ abstract class BaseRequest implements WriteRequest {
      * Callback acceptance status.
      */
     final void callbackSucceed() {
-        if (mGranted != null) {
-            mGranted.onAction(null);
+        if (mPermission != null) {
+            mPermission.onPermissionsGranted(null);
         }
     }
 
@@ -80,8 +74,8 @@ abstract class BaseRequest implements WriteRequest {
      * Callback rejected state.
      */
     final void callbackFailed() {
-        if (mDenied != null) {
-            mDenied.onAction(null);
+        if (mPermission != null) {
+            mPermission.onPermissionsDenied(null);
         }
     }
 }

@@ -15,7 +15,7 @@
  */
 package com.nsky.permission.runtime;
 
-import com.nsky.permission.Action;
+import com.nsky.permission.OnPermissionsListener;
 import com.nsky.permission.Rationale;
 
 import java.util.List;
@@ -37,14 +37,10 @@ public interface PermissionRequest {
     PermissionRequest rationale(Rationale<List<String>> rationale);
 
     /**
-     * Action to be taken when all permissions are granted.
+     * OnPermissionsListener to be taken when all permissions are granted.
      */
-    PermissionRequest onGranted(Action<List<String>> granted);
+    PermissionRequest setOnPermissionsListener(OnPermissionsListener<List<String>> granted);
 
-    /**
-     * Action to be taken when all permissions are denied.
-     */
-    PermissionRequest onDenied(Action<List<String>> denied);
 
     /**
      * Request permission.

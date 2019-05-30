@@ -27,7 +27,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:text="@string/cancel"/>
+        android:text="@string/permission_cancel"/>
 
     <TextView
         style="@style/Permission.WrapContent"

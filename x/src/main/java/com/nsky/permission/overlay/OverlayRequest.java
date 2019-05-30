@@ -31,12 +31,12 @@ public interface OverlayRequest {
     /**
      * Action to be taken when all permissions are granted.
      */
-    OverlayRequest onGranted(Action<Void> granted);
+    OverlayRequest onPermissionsGranted(Action<Void> granted);
 
     /**
      * Action to be taken when all permissions are denied.
      */
-    OverlayRequest onDenied(Action<Void> denied);
+    OverlayRequest onPermissionsDenied(Action<Void> denied);
 
     /**
      * Start request.

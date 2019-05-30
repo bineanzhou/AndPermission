@@ -15,7 +15,7 @@
  */
 package com.nsky.permission.notify.listener;
 
-import com.nsky.permission.Action;
+import com.nsky.permission.OnPermissionsListener;
 import com.nsky.permission.Rationale;
 
 /**
@@ -29,14 +29,10 @@ public interface ListenerRequest {
     ListenerRequest rationale(Rationale<Void> rationale);
 
     /**
-     * Action to be taken when all permissions are granted.
+     * OnPermissionsListener to be taken when all permissions are granted.
      */
-    ListenerRequest onGranted(Action<Void> granted);
+    ListenerRequest setOnPermissionsListener(OnPermissionsListener<Void> granted);
 
-    /**
-     * Action to be taken when all permissions are denied.
-     */
-    ListenerRequest onDenied(Action<Void> denied);
 
     /**
      * Start install.

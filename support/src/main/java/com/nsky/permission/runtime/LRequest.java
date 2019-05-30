@@ -18,7 +18,7 @@ package com.nsky.permission.runtime;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.nsky.permission.Action;
+import com.nsky.permission.OnPermissionsListener;
 import com.nsky.permission.Rationale;
 import com.nsky.permission.checker.PermissionChecker;
 import com.nsky.permission.checker.StrictChecker;
@@ -39,8 +39,7 @@ class LRequest implements PermissionRequest {
     private Source mSource;
 
     private String[] mPermissions;
-    private Action<List<String>> mGranted;
-    private Action<List<String>> mDenied;
+    private OnPermissionsListener<List<String>> mPermission;
 
     LRequest(Source source) {
         this.mSource = source;
@@ -58,16 +57,11 @@ class LRequest implements PermissionRequest {
     }
 
     @Override
-    public PermissionRequest onGranted(Action<List<String>> granted) {
-        this.mGranted = granted;
+    public PermissionRequest setOnPermissionsListener(OnPermissionsListener<List<String>> granted) {
+        this.mPermission = granted;
         return this;
     }
 
-    @Override
-    public PermissionRequest onDenied(Action<List<String>> denied) {
-        this.mDenied = denied;
-        return this;
-    }
 
     @Override
     public void start() {
@@ -92,14 +86,14 @@ class LRequest implements PermissionRequest {
      * Callback acceptance status.
      */
     private void callbackSucceed() {
-        if (mGranted != null) {
+        if (mPermission != null) {
             List<String> permissionList = asList(mPermissions);
             try {
-                mGranted.onAction(permissionList);
+                mPermission.onPermissionsGranted(permissionList);
             } catch (Exception e) {
-                Log.e("NSkyPermission", "Please check the onGranted() method body for bugs.", e);
-                if (mDenied != null) {
-                    mDenied.onAction(permissionList);
+                Log.e("NSkyPermission", "Please check the setOnPermissionsListener() method body for bugs.", e);
+                if (mPermission != null) {
+                    mPermission.onPermissionsDenied(permissionList);
                 }
             }
         }
@@ -109,8 +103,8 @@ class LRequest implements PermissionRequest {
      * Callback rejected state.
      */
     private void callbackFailed(List<String> deniedList) {
-        if (mDenied != null) {
-            mDenied.onAction(deniedList);
+        if (mPermission != null) {
+            mPermission.onPermissionsDenied(deniedList);
         }
     }
 

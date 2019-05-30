@@ -31,12 +31,12 @@ public interface ListenerRequest {
     /**
      * Action to be taken when all permissions are granted.
      */
-    ListenerRequest onGranted(Action<Void> granted);
+    ListenerRequest onPermissionsGranted(Action<Void> granted);
 
     /**
      * Action to be taken when all permissions are denied.
      */
-    ListenerRequest onDenied(Action<Void> denied);
+    ListenerRequest onPermissionsDenied(Action<Void> denied);
 
     /**
      * Start install.

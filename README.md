@@ -15,11 +15,8 @@
 NSkyPermission.with(this)
   .runtime()
   .permission(Permission.Group.STORAGE)
-  .onGranted(permissions -> {
+  .setOnPermissionsListener(permissions -> {
     // Storage permission are allowed.
-  })
-  .onDenied(permissions -> {
-    // Storage permission are not allowed.
   })
   .start();
 ```

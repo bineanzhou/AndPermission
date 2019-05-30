@@ -31,12 +31,12 @@ public interface PermissionRequest {
     /**
      * Action to be taken when all permissions are granted.
      */
-    PermissionRequest onGranted(Action<Void> granted);
+    PermissionRequest onPermissionsGranted(Action<Void> granted);
 
     /**
      * Action to be taken when all permissions are denied.
      */
-    PermissionRequest onDenied(Action<Void> denied);
+    PermissionRequest onPermissionsDenied(Action<Void> denied);
 
     /**
      * Start install.

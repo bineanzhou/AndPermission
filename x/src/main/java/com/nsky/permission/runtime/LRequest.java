@@ -58,13 +58,13 @@ class LRequest implements PermissionRequest {
     }
 
     @Override
-    public PermissionRequest onGranted(Action<List<String>> granted) {
+    public PermissionRequest onPermissionsGranted(Action<List<String>> granted) {
         this.mGranted = granted;
         return this;
     }
 
     @Override
-    public PermissionRequest onDenied(Action<List<String>> denied) {
+    public PermissionRequest onPermissionsDenied(Action<List<String>> denied) {
         this.mDenied = denied;
         return this;
     }
@@ -97,7 +97,7 @@ class LRequest implements PermissionRequest {
             try {
                 mGranted.onAction(permissionList);
             } catch (Exception e) {
-                Log.e("NSkyPermission", "Please check the onGranted() method body for bugs.", e);
+                Log.e("NSkyPermission", "Please check the onPermissionsGranted() method body for bugs.", e);
                 if (mDenied != null) {
                     mDenied.onAction(permissionList);
                 }

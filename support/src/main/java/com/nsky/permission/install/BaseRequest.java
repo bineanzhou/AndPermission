@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.nsky.permission.Action;
+import com.nsky.permission.OnPermissionsListener;
 import com.nsky.permission.NSkyPermission;
 import com.nsky.permission.Rationale;
 import com.nsky.permission.RequestExecutor;
@@ -41,8 +41,7 @@ abstract class BaseRequest implements InstallRequest {
             executor.execute();
         }
     };
-    private Action<File> mGranted;
-    private Action<File> mDenied;
+    private OnPermissionsListener<File> mPermission;
 
     BaseRequest(Source source) {
         this.mSource = source;
@@ -61,16 +60,11 @@ abstract class BaseRequest implements InstallRequest {
     }
 
     @Override
-    public final InstallRequest onGranted(Action<File> granted) {
-        this.mGranted = granted;
+    public final InstallRequest setOnPermissionsListener(OnPermissionsListener<File> granted) {
+        this.mPermission = granted;
         return this;
     }
 
-    @Override
-    public final InstallRequest onDenied(Action<File> denied) {
-        this.mDenied = denied;
-        return this;
-    }
 
     /**
      * Why permissions are required.
@@ -95,8 +89,8 @@ abstract class BaseRequest implements InstallRequest {
      * Callback acceptance status.
      */
     final void callbackSucceed() {
-        if (mGranted != null) {
-            mGranted.onAction(mFile);
+        if (mPermission != null) {
+            mPermission.onPermissionsGranted(mFile);
         }
     }
 
@@ -104,8 +98,8 @@ abstract class BaseRequest implements InstallRequest {
      * Callback rejected state.
      */
     final void callbackFailed() {
-        if (mDenied != null) {
-            mDenied.onAction(mFile);
+        if (mPermission != null) {
+            mPermission.onPermissionsDenied(mFile);
         }
     }
 }

@@ -15,7 +15,7 @@
  */
 package com.nsky.permission.install;
 
-import com.nsky.permission.Action;
+import com.nsky.permission.OnPermissionsListener;
 import com.nsky.permission.Rationale;
 
 import java.io.File;
@@ -38,14 +38,10 @@ public interface InstallRequest {
     InstallRequest rationale(Rationale<File> rationale);
 
     /**
-     * Action to be taken when all permissions are granted.
+     * OnPermissionsListener to be taken when all permissions are granted.
      */
-    InstallRequest onGranted(Action<File> granted);
+    InstallRequest setOnPermissionsListener(OnPermissionsListener<File> granted);
 
-    /**
-     * Action to be taken when all permissions are denied.
-     */
-    InstallRequest onDenied(Action<File> denied);
 
     /**
      * Start install.

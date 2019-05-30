@@ -39,12 +39,12 @@ public interface PermissionRequest {
     /**
      * Action to be taken when all permissions are granted.
      */
-    PermissionRequest onGranted(Action<List<String>> granted);
+    PermissionRequest onPermissionsGranted(Action<List<String>> granted);
 
     /**
      * Action to be taken when all permissions are denied.
      */
-    PermissionRequest onDenied(Action<List<String>> denied);
+    PermissionRequest onPermissionsDenied(Action<List<String>> denied);
 
     /**
      * Request permission.

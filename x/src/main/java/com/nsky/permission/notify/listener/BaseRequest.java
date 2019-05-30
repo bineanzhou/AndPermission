@@ -49,13 +49,13 @@ abstract class BaseRequest implements ListenerRequest {
     }
 
     @Override
-    public final ListenerRequest onGranted(Action<Void> granted) {
+    public final ListenerRequest onPermissionsGranted(Action<Void> granted) {
         this.mGranted = granted;
         return this;
     }
 
     @Override
-    public final ListenerRequest onDenied(Action<Void> denied) {
+    public final ListenerRequest onPermissionsDenied(Action<Void> denied) {
         this.mDenied = denied;
         return this;
     }

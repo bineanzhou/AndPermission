@@ -49,13 +49,13 @@ abstract class BaseRequest implements PermissionRequest {
     }
 
     @Override
-    public final PermissionRequest onGranted(Action<Void> granted) {
+    public final PermissionRequest onPermissionsGranted(Action<Void> granted) {
         this.mGranted = granted;
         return this;
     }
 
     @Override
-    public final PermissionRequest onDenied(Action<Void> denied) {
+    public final PermissionRequest onPermissionsDenied(Action<Void> denied) {
         this.mDenied = denied;
         return this;
     }
