@@ -41,7 +41,10 @@ import java.io.File;
 import java.util.List;
 
 public class NSkyPermission {
-
+    /**
+     * 跳转到系统设置页
+     */
+    public static final int REQUEST_CODE_SETTING = 10001;
     /**
      * With context.
      *
@@ -363,11 +366,16 @@ public class NSkyPermission {
     /**
      * Display setting dialog.
      */
-    public static void showSettingDialog(final Activity activity, final List<String> permissions, final int reqCode) {
+    public static void showSettingDialog(final Activity activity, String msg, final List<String> permissions, final int reqCode) {
         List<String> permissionNames = Permission.transformText(activity, permissions);
+
         String message = activity.getString(R.string.message_permission_always_failed,
                 TextUtils.join("\n", permissionNames));
 
+        if(!TextUtils.isEmpty(msg))
+        {
+            message = msg;
+        }
         new AlertDialog.Builder(activity).setCancelable(false)
                 .setTitle(R.string.permission_title_dialog)
                 .setMessage(message)

@@ -48,7 +48,7 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int REQUEST_CODE_SETTING = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             }
             case R.id.btn_setting: {
-                NSkyPermission.startSetPermission(this, REQUEST_CODE_SETTING);
+                NSkyPermission.startSetPermission(this, NSkyPermission.REQUEST_CODE_SETTING);
                 break;
             }
             case R.id.btn_notification: {
@@ -330,7 +330,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onPermissionsDenied(List<String> permissions) {
                         toast(R.string.failure);
                         if (NSkyPermission.hasAlwaysDeniedPermission(MainActivity.this, permissions)) {
-                            NSkyPermission.showSettingDialog(MainActivity.this, permissions, REQUEST_CODE_SETTING);
+                            NSkyPermission.showSettingDialog(MainActivity.this,
+                                    "该功能无法正常使用，请去设置页面打开相关权限",
+                                    permissions, NSkyPermission.REQUEST_CODE_SETTING);
                         }
                     }
                 })
@@ -341,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         switch (requestCode) {
-            case REQUEST_CODE_SETTING: {
+            case NSkyPermission.REQUEST_CODE_SETTING: {
                 Toast.makeText(MainActivity.this, R.string.message_setting_comeback, Toast.LENGTH_SHORT).show();
                 break;
             }
