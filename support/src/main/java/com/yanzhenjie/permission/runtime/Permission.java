@@ -78,7 +78,7 @@ public class Permission {
         public static final String[] LOCATION = new String[] {Permission.ACCESS_FINE_LOCATION,
             Permission.ACCESS_COARSE_LOCATION};
 
-        public static final String[] MICROPHONE = new String[] {Permission.RECORD_AUDIO};
+        public static final String[] RECORD_AUDIO = new String[] {Permission.RECORD_AUDIO};
 
         public static final String[] PHONE;
 

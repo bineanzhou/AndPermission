@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_request_contact).setOnClickListener(this);
         findViewById(R.id.btn_request_location).setOnClickListener(this);
         findViewById(R.id.btn_request_calendar).setOnClickListener(this);
-        findViewById(R.id.btn_request_microphone).setOnClickListener(this);
+        findViewById(R.id.btn_request_recordaudio).setOnClickListener(this);
         findViewById(R.id.btn_request_storage).setOnClickListener(this);
         findViewById(R.id.btn_request_phone).setOnClickListener(this);
         findViewById(R.id.btn_request_sensors).setOnClickListener(this);
@@ -170,8 +170,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 popupMenu.show();
                 break;
             }
-            case R.id.btn_request_microphone: {
-                requestPermission(Permission.Group.MICROPHONE);
+            case R.id.btn_request_recordaudio: {
+                requestPermission(Permission.Group.RECORD_AUDIO);
                 break;
             }
             case R.id.btn_request_storage: {
@@ -336,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (AndPermission.hasAlwaysDeniedPermission(MainActivity.this, permissions)) {
                         showSettingDialog(MainActivity.this, permissions);
                     }
+
                 }
             })
             .start();

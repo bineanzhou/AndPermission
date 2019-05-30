@@ -29,7 +29,7 @@
     <string name="permission_location">Location</string>
 
     <string name="permission_calendar">Calendar</string>
-    <string name="permission_microphone">Microphone</string>
+    <string name="permission_recordaudio">RecordAudio</string>
     <string name="permission_storage">Storage</string>
 
     <string name="permission_phone">Phone</string>

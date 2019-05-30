@@ -67,7 +67,15 @@ class RecordAudioTest implements PermissionTest {
                     if (buffer != AudioRecord.ERROR_BAD_VALUE) {
                         AudioRecord recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, rate, channel, format,
                             buffer);
-                        if (recorder.getState() == AudioRecord.STATE_INITIALIZED) return recorder;
+                        int state = recorder.getState();
+
+                        if (state == AudioRecord.STATE_INITIALIZED)
+                        {
+                            return recorder;
+                        }else
+                        {
+                            return null;
+                        }
                     }
                 }
             }
