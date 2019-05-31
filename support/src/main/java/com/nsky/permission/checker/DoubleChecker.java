@@ -24,8 +24,8 @@ import java.util.List;
  */
 public final class DoubleChecker implements PermissionChecker {
 
-    private static final StandardChecker STANDARD_CHECKER = new StandardChecker();
-    private static final StrictChecker STRICT_CHECKER = new StrictChecker();
+    private static final StandardChecker STANDARD_CHECKER = new StandardChecker();//标准校验
+    private static final StrictChecker STRICT_CHECKER = new StrictChecker();//严格校验
 
     @Override
     public boolean hasPermission(Context context, String... permissions) {

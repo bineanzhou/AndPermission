@@ -37,5 +37,5 @@ ext {
 
     support_version = '26.1.0'
     LIB_DIR_PATH = projectDir.getPath() +  "/libs"
-    build_time = new Date().format("YYYYMMdd", TimeZone.getDefault())
+    build_time = new Date().format("YYYYMMddhhmm", TimeZone.getDefault())
 }

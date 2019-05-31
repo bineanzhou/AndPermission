@@ -206,7 +206,7 @@ public class NSkyPermission {
     /**
      * Classic permission checker.
      */
-    private static final PermissionChecker PERMISSION_CHECKER = new DoubleChecker();
+    private static final DoubleChecker PERMISSION_CHECKER = new DoubleChecker();
 
     /**
      * Judgment already has the target permission.
@@ -240,6 +240,7 @@ public class NSkyPermission {
     public static boolean hasPermissions(android.app.Fragment fragment, String... permissions) {
         return hasPermissions(fragment.getActivity(), permissions);
     }
+
 
     /**
      * Judgment already has the target permission.
@@ -376,7 +377,7 @@ public class NSkyPermission {
         {
             message = msg;
         }
-        new AlertDialog.Builder(activity).setCancelable(false)
+        new AlertDialog.Builder(activity, R.style.Theme_AppCompat_Light).setCancelable(false)
                 .setTitle(R.string.permission_title_dialog)
                 .setMessage(message)
                 .setPositiveButton(R.string.permission_setting, new DialogInterface.OnClickListener() {

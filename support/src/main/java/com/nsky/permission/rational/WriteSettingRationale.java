@@ -30,7 +30,7 @@ public class WriteSettingRationale implements Rationale<Void> {
 
     @Override
     public void showRationale(Context context, Void data, final RequestExecutor executor) {
-        new AlertDialog.Builder(context).setCancelable(false)
+        new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light).setCancelable(false)
             .setTitle(R.string.permission_title_dialog)
             .setMessage(R.string.permission_message_write_setting_failed)
             .setPositiveButton(R.string.permission_setting, new DialogInterface.OnClickListener() {

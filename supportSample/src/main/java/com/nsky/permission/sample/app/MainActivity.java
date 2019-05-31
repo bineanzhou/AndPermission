@@ -80,7 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_request_camera: {
-                requestPermission(Permission.Group.CAMERA);
+//                requestPermission(Permission.Group.CAMERA);
+                requestPermission(Permission.RECORD_AUDIO,Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE);
                 break;
             }
             case R.id.btn_request_contact: {
