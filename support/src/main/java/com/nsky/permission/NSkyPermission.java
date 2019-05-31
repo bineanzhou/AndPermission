@@ -367,7 +367,7 @@ public class NSkyPermission {
     /**
      * Display setting dialog.
      */
-    public static void showSettingDialog(final Activity activity, String msg, final List<String> permissions, final int reqCode) {
+    public static void showSettingDialog(final Activity activity, String msg, final List<String> permissions, final int reqCode, final boolean autoFinish) {
         List<String> permissionNames = Permission.transformText(activity, permissions);
 
         String message = activity.getString(R.string.message_permission_always_failed,
@@ -389,7 +389,48 @@ public class NSkyPermission {
                 .setNegativeButton(R.string.permission_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        activity.onBackPressed();
+                        if(autoFinish)
+                        {
+                            activity.onBackPressed();
+                        }
+
+                    }
+                })
+                .show();
+    }
+
+    public static void showSettingDialog(final Fragment fragment, String msg, final List<String> permissions, final int reqCode, final boolean autoFinish) {
+        List<String> permissionNames = Permission.transformText(fragment.getActivity(), permissions);
+
+        if(fragment == null||fragment.getActivity() == null)
+            return;
+        final Activity activity = fragment.getActivity();
+        if(activity.isDestroyed())
+            return;
+
+        String message = fragment.getString(R.string.message_permission_always_failed,
+                TextUtils.join("\n", permissionNames));
+
+        if(!TextUtils.isEmpty(msg))
+        {
+            message = msg;
+        }
+        new AlertDialog.Builder(activity, R.style.Permission_Dialog).setCancelable(false)
+                .setTitle(R.string.permission_title_dialog)
+                .setMessage(message)
+                .setPositiveButton(R.string.permission_setting, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startSetPermission(fragment, reqCode);
+                    }
+                })
+                .setNegativeButton(R.string.permission_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!activity.isDestroyed()&&autoFinish)
+                        {
+                            activity.onBackPressed();
+                        }
                     }
                 })
                 .show();
@@ -400,6 +441,9 @@ public class NSkyPermission {
      */
     public static void startSetPermission(final Activity activity, int reqCode) {
         NSkyPermission.with(activity).runtime().setting().start(reqCode);
+    }
+    public static void startSetPermission(final Fragment fragment, int reqCode) {
+        NSkyPermission.with(fragment).runtime().setting().start(reqCode);
     }
 
     private NSkyPermission() {
