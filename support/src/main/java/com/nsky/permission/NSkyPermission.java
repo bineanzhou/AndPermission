@@ -377,7 +377,7 @@ public class NSkyPermission {
         {
             message = msg;
         }
-        new AlertDialog.Builder(activity, R.style.Theme_AppCompat_Light).setCancelable(false)
+        new AlertDialog.Builder(activity, R.style.Permission_Dialog).setCancelable(false)
                 .setTitle(R.string.permission_title_dialog)
                 .setMessage(message)
                 .setPositiveButton(R.string.permission_setting, new DialogInterface.OnClickListener() {
@@ -389,6 +389,7 @@ public class NSkyPermission {
                 .setNegativeButton(R.string.permission_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        activity.onBackPressed();
                     }
                 })
                 .show();

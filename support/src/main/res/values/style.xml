@@ -28,5 +28,10 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+    <style name="Permission.Dialog" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">#303F9F</item>
+        <item name="colorPrimaryDark">#303F9F</item>
+        <item name="colorAccent">#303F9F</item>
+    </style>
 
 </resources>

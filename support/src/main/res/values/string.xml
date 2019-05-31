@@ -26,7 +26,7 @@
     <string name="permission_name_sms">短信</string>
     <string name="permission_name_storage">存储空间</string>
 
-    <string name="permission_title_dialog">提示信息</string>
+    <string name="permission_title_dialog">权限申请</string>
     <string name="permission_message_install_failed">您的设备不允许我们安装应用。</string>
     <string name="permission_message_overlay_failed">您的设备不允许我们使用其他应用程序。</string>
     <string name="permission_message_write_setting_failed">您的设备不允许我们修改系统设置。</string>

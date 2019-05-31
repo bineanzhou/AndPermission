@@ -35,7 +35,7 @@ public final class RuntimeRationale implements Rationale<List<String>> {
         String message = context.getString(R.string.permission_message_permission_rationale,
                 TextUtils.join("\n", permissionNames));
 
-        new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light).setCancelable(false)
+        new AlertDialog.Builder(context, R.style.Permission_Dialog).setCancelable(false)
                 .setTitle(R.string.permission_title_dialog)
                 .setMessage(message)
                 .setPositiveButton(R.string.permission_ok, new DialogInterface.OnClickListener() {

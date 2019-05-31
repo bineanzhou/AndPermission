@@ -32,7 +32,7 @@ public class InstallRationale implements Rationale<File> {
 
     @Override
     public void showRationale(Context context, File data, final RequestExecutor executor) {
-        new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light).setCancelable(false)
+        new AlertDialog.Builder(context, R.style.Permission_Dialog).setCancelable(false)
             .setTitle(R.string.permission_title_dialog)
             .setMessage(R.string.permission_message_install_failed)
             .setPositiveButton(R.string.permission_setting, new DialogInterface.OnClickListener() {
