@@ -42,6 +42,6 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:support-fragment:$support_version"
-    implementation "com.android.support:appcompat-v7:$support_version"
+    api "com.android.support:support-fragment:$support_version"
+    api "com.android.support:appcompat-v7:$support_version"
 }
